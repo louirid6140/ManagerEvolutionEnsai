@@ -1,0 +1,2 @@
+# Module Manager.Evol.ManagerEvolutionJUnit
+# RPC service class, partial path of RPC policy file

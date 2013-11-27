@@ -1,0 +1,2 @@
+serviceClass: Manager.Evol.client.GreetingService
+path: A62CA47D6DBE65DE695CAAFE57820516.gwt.rpc

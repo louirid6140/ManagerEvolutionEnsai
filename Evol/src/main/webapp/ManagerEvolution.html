@@ -1,0 +1,99 @@
+<!doctype html>
+<!-- The DOCTYPE declaration above will set the    -->
+<!-- browser's rendering engine into               -->
+<!-- "Standards Mode". Replacing this declaration  -->
+<!-- with a "Quirks Mode" doctype may lead to some -->
+<!-- differences in layout.                        -->
+
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+<!--                                                               -->
+<!-- Consider inlining CSS to reduce the number of requested files -->
+<!--                                                               -->
+<link type="text/css" rel="stylesheet" href="ManagerEvolution.css">
+
+<!-- Nom de l'application                      -->
+<title>Génie Logiciel</title>
+
+<!-- Le script JavaScript gwt.js est utilisé pour lancer l'application notamment en-->
+<!--exécutant la version de l'application dédiée au navigateur utilisé.-->
+<script type="text/javascript" language="javascript"
+	src="ManagerEvolution/ManagerEvolution.nocache.js"></script>
+</head>
+<body>
+
+	<!-- L'iframe est utilisé dans le mécanisme de gestion de l'historique de navigation. -->
+	<iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1'
+		style="position: absolute; width: 0; height: 0; border: 0"></iframe>
+
+	<noscript>
+		<div
+			style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+			Your web browser must have JavaScript enabled in order for this
+			application to display correctly.</div>
+	</noscript>
+
+	<h1>Evolution Manager</h1>
+
+	<table align="left">
+		<tr>
+			<td colspan="2" style="font-weight: bold;">De :</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="font-weight: bold;">Nom :</td>
+			<td id="name_old_container"></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="font-weight: bold;">Version :</td>
+			<td id="version_old_container"></td>
+		</tr>
+	</table>
+
+	<table align="center">
+		<tr>
+			<td colspan="2" style="font-weight: bold;">à :</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="font-weight: bold;">Nom :</td>
+			<td id="name_new_container"></td>
+		</tr>
+		<tr>
+			<td colspan="2" style="font-weight: bold;">Version :</td>
+			<td id="version_new_container"></td>
+		</tr>
+	</table>
+
+	<table align="left">
+		<tr>
+			<br>
+			<td colspan="2" style="font-weight: bold;">Choisir le(s)
+				critère(s) à prendre en compte:</td>
+			</br>
+		</tr>
+		<tr>
+			<td id="choix_google_container"></td>
+		</tr>
+		<tr>
+			<td id="choix_github_container"></td>
+		</tr>
+		<tr>
+			<td id="choix_forums_container"></td>
+		</tr>
+	</table>
+
+	<table align="right">
+		<tr>
+			<td id="bouton_recherche_container"></td>
+		</tr>
+	</table>
+
+	<table align="left">
+		<tr>
+			<td id="panel_container"></td>
+		</tr>
+	</table>
+
+</body>
+</html>
