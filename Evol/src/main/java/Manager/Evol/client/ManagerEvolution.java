@@ -137,6 +137,7 @@ public class ManagerEvolution implements EntryPoint {
 				panel.selectTab(0);
 
 				// Add it to the root panel.
+				Window.alert("Veuillez cliquez sur 'ok' pour afficher les résultats");
 				RootPanel.get("panel_container").add(panel);
 
 
