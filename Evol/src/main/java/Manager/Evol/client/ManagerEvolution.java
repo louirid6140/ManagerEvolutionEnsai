@@ -4,8 +4,11 @@ package Manager.Evol.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
@@ -52,7 +55,7 @@ public class ManagerEvolution implements EntryPoint {
 		final  CheckBox choix_google = new CheckBox("Google");
 		final  CheckBox choix_github = new CheckBox("GitHub");
 		final  CheckBox choix_forums = new CheckBox("Forums");
-		
+
 		final ListBox liste_deroulante = new ListBox();
 		liste_deroulante.addItem("forum 1");
 		liste_deroulante.addItem("forum 2");
@@ -77,46 +80,49 @@ public class ManagerEvolution implements EntryPoint {
 		name_old.setFocus(true);
 		name_old.selectAll();
 
-		
+
 		// Action si on clique sur le la checkbox github
 		choix_forums.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				RootPanel.get("liste_deroulante_container").add(liste_deroulante);
 				if(choix_forums.getValue()==true){
-					liste_deroulante.setEnabled(true);
+					liste_deroulante.setVisible(true);
 					liste_deroulante.setVisibleItemCount(2);	
 				}
 				else{
-					liste_deroulante.setEnabled(false);
+					liste_deroulante.setVisible(false);
 				}
 
 			}     
 		});
-
 		// actions si on clique sur le bouton recherche
 		bouton_recherche.addClickHandler(new ClickHandler() {
+			TabPanel panel = new TabPanel();
 			public void onClick(ClickEvent event) {
-				TabPanel panel = new TabPanel();
-                if(choix_google.getValue()==true){ 
-                        //Crée le nom à  chercher sur google
-                        nom_recherche= "%22From%20"+name_old.getValue()+"%20"+version_old.getValue()+"%20to%20"+
-                                        name_new.getValue()+"%20"+version_new.getValue()+"%22";
-                        //Scrapping avec Google
-                        greetingService.googleScrap(nom_recherche,
-                                        new AsyncCallback<String>() {
-                                        public void onFailure(Throwable caught) {
-                                                // Si problème lors du scrapping réponse 
-                                                nb="Problème lors de la recherche";
-                                        }
-                                        public void onSuccess(String result) {
-                                                nb=result;
-                                        }
+				panel.clear();
+				if(choix_google.getValue()==true){ 
+					nom_recherche= "%22From%20"+name_old.getValue()+"%20"+version_old.getValue()+"%20to%20"+
+							name_new.getValue()+"%20"+version_new.getValue()+"%22";
+					//Scrapping avec Google
+					greetingService.googleScrap(nom_recherche,
+							new AsyncCallback<String>() {
+						public void onFailure(Throwable caught) {
+							// Si problème lors du scrapping réponse 
+							nb="Problème lors de la recherche";
+						}
+						public void onSuccess(String result) {
+							//permet d'attendre que le scrap à partir de google soit ok
+							Scheduler.get().scheduleEntry(new ScheduledCommand() {
+								public void execute() {
+									panel.add(new HTML("Nombre de résultats google: "+nb), "Google");
+								}
+							});
+							nb=result;
+						}
 
-                                });
-                        panel.add(new HTML("Nombre de résultats google: "+nb), "Google");
-                        
-                        
-                }
+					});
+
+				}
 
 				if(choix_github.getValue()==true){                         
 					panel.add(new HTML("A implémenter"), "GitHub");
@@ -132,6 +138,7 @@ public class ManagerEvolution implements EntryPoint {
 
 				// Add it to the root panel.
 				RootPanel.get("panel_container").add(panel);
+
 
 			}     
 		});
