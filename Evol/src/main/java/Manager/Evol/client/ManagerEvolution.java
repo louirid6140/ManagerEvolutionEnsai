@@ -56,10 +56,12 @@ public class ManagerEvolution implements EntryPoint {
 		final  CheckBox choix_github = new CheckBox("GitHub");
 		final  CheckBox choix_forums = new CheckBox("Forums");
 
-		final ListBox liste_deroulante = new ListBox();
-		liste_deroulante.addItem("forum 1");
-		liste_deroulante.addItem("forum 2");
-		liste_deroulante.addItem("forum 3");
+		final ListBox liste_deroulante = new ListBox(true);
+		liste_deroulante.addItem("nomForum_1");
+		liste_deroulante.addItem("nomForum_2");
+		liste_deroulante.addItem("nomForum_3");
+		liste_deroulante.addItem("nomForumforum_4");
+		liste_deroulante.addItem("nomForum_5");
 
 
 		// Add the nameField and sendButton to the RootPanel
@@ -87,7 +89,8 @@ public class ManagerEvolution implements EntryPoint {
 				RootPanel.get("liste_deroulante_container").add(liste_deroulante);
 				if(choix_forums.getValue()==true){
 					liste_deroulante.setVisible(true);
-					liste_deroulante.setVisibleItemCount(2);	
+					liste_deroulante.setVisibleItemCount(3);
+					Window.alert("Sélectionnez les forums que vous souhaitez utiliser pour la recherche (Utilisez la commande ctrl)");
 				}
 				else{
 					liste_deroulante.setVisible(false);
@@ -129,8 +132,15 @@ public class ManagerEvolution implements EntryPoint {
 
 				}
 
-				if(choix_forums.getValue()==true){                         
-					panel.add(new HTML("A implémenter"), "Forums");
+				if(choix_forums.getValue()==true){
+					String message="Vous avez sélectionné les forums: ";
+					for (int compteur = 0; compteur < 5; compteur++) {
+						
+						if(liste_deroulante.isItemSelected(compteur)==true){
+							message+=liste_deroulante.getValue(compteur)+" ";
+						}
+					}
+					panel.add(new HTML(message), "Forums");
 
 				}
 				// Show the 'bar' tab initially.
