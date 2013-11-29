@@ -10,6 +10,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.TextBox;
@@ -23,17 +24,17 @@ public class ManagerEvolution implements EntryPoint {
 	 */
 	private final GreetingServiceAsync greetingService = GWT
 			.create(GreetingService.class);
-	
+
 	private String nb;
 	private String nom_recherche;
 
 	/**
 	 * This is the entry point method.
 	 */
-	
-  public void onModuleLoad() {
-	  
-	  final TextBox name_old = new TextBox();
+
+	public void onModuleLoad() {
+
+		final TextBox name_old = new TextBox();
 		name_old.setText("Junit");
 
 		final TextBox version_old = new TextBox();
@@ -51,6 +52,12 @@ public class ManagerEvolution implements EntryPoint {
 		final  CheckBox choix_google = new CheckBox("Google");
 		final  CheckBox choix_github = new CheckBox("GitHub");
 		final  CheckBox choix_forums = new CheckBox("Forums");
+		
+		final ListBox liste_deroulante = new ListBox();
+		liste_deroulante.addItem("forum 1");
+		liste_deroulante.addItem("forum 2");
+		liste_deroulante.addItem("forum 3");
+
 
 		// Add the nameField and sendButton to the RootPanel
 		// Use RootPanel.get() to get the entire body element
@@ -66,61 +73,67 @@ public class ManagerEvolution implements EntryPoint {
 		RootPanel.get("choix_forums_container").add(choix_forums);
 
 
-
 		// Focus the cursor on the name field when the app loads
 		name_old.setFocus(true);
 		name_old.selectAll();
-		
-		
-
 
 		
-		
+		// Action si on clique sur le la checkbox github
+		choix_forums.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				RootPanel.get("liste_deroulante_container").add(liste_deroulante);
+				if(choix_forums.getValue()==true){
+					liste_deroulante.setEnabled(true);
+					liste_deroulante.setVisibleItemCount(2);	
+				}
+				else{
+					liste_deroulante.setEnabled(false);
+				}
+
+			}     
+		});
+
+		// actions si on clique sur le bouton recherche
 		bouton_recherche.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				TabPanel panel = new TabPanel();
-			    
-			    
-			    
-			    
-				if(choix_google.getValue()==true){ 
-					//Crée le nom à  chercher sur google
-					nom_recherche= "%22From%20"+name_old.getValue()+"%20"+version_old.getValue()+"%20to%20"+
-							name_new.getValue()+"%20"+version_new.getValue()+"%22";
-					//Scrapping avec Google
-					greetingService.googleScrap(nom_recherche,
-							new AsyncCallback<String>() {
-							public void onFailure(Throwable caught) {
-								// Si problème lors du scrapping réponse 
-								nb="Problème lors de la recherche";
-							}
-							public void onSuccess(String result) {
-								nb=result;
-							}
-						});
-					panel.add(new HTML("Nombre de résultats google: "+nb), "Google");
-					
-					
-				}
-				
+                if(choix_google.getValue()==true){ 
+                        //Crée le nom à  chercher sur google
+                        nom_recherche= "%22From%20"+name_old.getValue()+"%20"+version_old.getValue()+"%20to%20"+
+                                        name_new.getValue()+"%20"+version_new.getValue()+"%22";
+                        //Scrapping avec Google
+                        greetingService.googleScrap(nom_recherche,
+                                        new AsyncCallback<String>() {
+                                        public void onFailure(Throwable caught) {
+                                                // Si problème lors du scrapping réponse 
+                                                nb="Problème lors de la recherche";
+                                        }
+                                        public void onSuccess(String result) {
+                                                nb=result;
+                                        }
+
+                                });
+                        panel.add(new HTML("Nombre de résultats google: "+nb), "Google");
+                        
+                        
+                }
+
 				if(choix_github.getValue()==true){                         
-					//scrap gihub et afficher résultats
 					panel.add(new HTML("A implémenter"), "GitHub");
-					
+
 				}
-				
+
 				if(choix_forums.getValue()==true){                         
-					//scrap forums et afficher résultats;
 					panel.add(new HTML("A implémenter"), "Forums");
-					
+
 				}
 				// Show the 'bar' tab initially.
-			    panel.selectTab(0);
+				panel.selectTab(0);
 
-			    // Add it to the root panel.
-			    RootPanel.get("panel_container").add(panel);
-			
+				// Add it to the root panel.
+				RootPanel.get("panel_container").add(panel);
+
 			}     
 		});
-  }
+	}
 }
