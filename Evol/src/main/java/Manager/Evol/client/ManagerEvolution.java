@@ -36,16 +36,13 @@ public class ManagerEvolution implements EntryPoint {
 	 */
 
 	public void onModuleLoad() {
-
+		//initialisation par défault
 		final TextBox name_old = new TextBox();
 		name_old.setText("Junit");
-
 		final TextBox version_old = new TextBox();
 		version_old.setText("3.8");
-
 		final TextBox name_new = new TextBox();
 		name_new.setText("Junit");
-
 		final TextBox version_new = new TextBox();
 		version_new.setText("4.9");
 
@@ -104,10 +101,9 @@ public class ManagerEvolution implements EntryPoint {
 			public void onClick(ClickEvent event) {
 				panel.clear();
 				if(choix_google.getValue()==true){ 
-					nom_recherche= "%22From%20"+name_old.getValue()+"%20"+version_old.getValue()+"%20to%20"+
-							name_new.getValue()+"%20"+version_new.getValue()+"%22";
+					GoogleHit googleHit=new GoogleHit(name_old.getValue(),version_old.getValue(),name_new.getValue(),version_new.getValue());
 					//Scrapping avec Google
-					greetingService.googleScrap(nom_recherche,
+					greetingService.googleScrap(googleHit.creationRequeteGoogle(),
 							new AsyncCallback<String>() {
 						public void onFailure(Throwable caught) {
 							// Si problème lors du scrapping réponse 
@@ -143,8 +139,7 @@ public class ManagerEvolution implements EntryPoint {
 					panel.add(new HTML(message), "Forums");
 
 				}
-				// Show the 'bar' tab initially.
-				panel.selectTab(0);
+			
 
 				// Add it to the root panel.
 				Window.alert("Veuillez cliquez sur 'ok' pour afficher les résultats");
