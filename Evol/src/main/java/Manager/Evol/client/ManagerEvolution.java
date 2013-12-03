@@ -29,6 +29,7 @@ public class ManagerEvolution implements EntryPoint {
 			.create(GreetingService.class);
 
 	private String nb;
+	private String fo;
 	private String nom_recherche;
 
 	/**
@@ -54,7 +55,7 @@ public class ManagerEvolution implements EntryPoint {
 		final  CheckBox choix_forums = new CheckBox("Forums");
 
 		final ListBox liste_deroulante = new ListBox(true);
-		liste_deroulante.addItem("nomForum_1");
+		liste_deroulante.addItem("OpenClassRooms");
 		liste_deroulante.addItem("nomForum_2");
 		liste_deroulante.addItem("nomForum_3");
 		liste_deroulante.addItem("nomForumforum_4");
@@ -129,17 +130,37 @@ public class ManagerEvolution implements EntryPoint {
 				}
 
 				if(choix_forums.getValue()==true){
-					String message="Vous avez sélectionné les forums: ";
-					for (int compteur = 0; compteur < 5; compteur++) {
-						
-						if(liste_deroulante.isItemSelected(compteur)==true){
-							message+=liste_deroulante.getValue(compteur)+" ";
+					if(liste_deroulante.isItemSelected(0)==true){
+						greetingService.ForumScrapOpenClassrooms("oui en fait là je fais un test sur un truc précis en dur dans mon code alors voilà quoi :)",
+								new AsyncCallback<String>() {
+							public void onFailure(Throwable caught) {
+								// Si problème lors du scrapping réponse 
+								fo="Problème lors de la recherche";
+							}
+							public void onSuccess(String result) {
+								//permet d'attendre que le scrap à partir de google soit ok
+								Scheduler.get().scheduleEntry(new ScheduledCommand() {
+									public void execute() {
+										panel.add(new HTML(fo), "Forums");
+									}
+								});
+								fo=result;
+							}
+
+						});
+					}else{
+						String message="Vous avez sélectionné les forums: ";
+						for (int compteur = 0; compteur < 5; compteur++) {
+							
+							if(liste_deroulante.isItemSelected(compteur)==true){
+								message+=liste_deroulante.getValue(compteur)+" ";
+							}
 						}
+						panel.add(new HTML(message), "Forums");
 					}
-					panel.add(new HTML(message), "Forums");
 
 				}
-			
+
 
 				// Add it to the root panel.
 				Window.alert("Veuillez cliquez sur 'ok' pour afficher les résultats");

@@ -7,4 +7,5 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
  */
 public interface GreetingServiceAsync {
 	void googleScrap(String recherche,AsyncCallback<String> callback);
+	void ForumScrapOpenClassrooms(String recherche,AsyncCallback<String> callback);
 }

@@ -7,11 +7,6 @@ public class Recherche {
 	private String toNom;
 	private String toVersion;
 	
-	
-	public Recherche() {
-		super();
-	}
-
 	public Recherche(String fromNom, String fromVersion, String toNom,
 			String toVersion) {
 		super();

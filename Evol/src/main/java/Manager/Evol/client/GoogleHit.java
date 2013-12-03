@@ -11,12 +11,6 @@ public class GoogleHit extends Recherche {
 		final String espaceGoogle="%20";
 		final String guillemetGoogle="%22";
 		
-		
-		public GoogleHit() {
-			super();
-		}
-
-
 		public GoogleHit(String fromNom, String fromVersion, String toNom,
 				String toVersion) {
 			super(fromNom, fromVersion, toNom, toVersion);
