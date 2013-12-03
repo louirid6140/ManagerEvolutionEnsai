@@ -139,7 +139,6 @@ public class ManagerEvolution implements EntryPoint {
 					panel.add(new HTML(message), "Forums");
 
 				}
-			
 
 				// Add it to the root panel.
 				Window.alert("Veuillez cliquez sur 'ok' pour afficher les résultats");
