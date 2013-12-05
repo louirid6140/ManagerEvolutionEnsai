@@ -34,52 +34,70 @@ GreetingService {
 	}
 
 	public String ForumScrapOpenClassrooms(String recherche){//element de la classe énumérées forum
-		try {
-			String titrePosts="oups";
-			String rech="Junit 4";
-			int page =0;
-			//    		rech=rech.replace(" ","+");
-			String forum="fr.openclassrooms.com";
-			String motCles="probleme|erreur|bug|migration";
+    	
+		/*SYNTAXE DE RECH: problème|erreur|bug|migration "jUnit 4"|"jUnit4" site:fr.openclassrooms.com" */
+		/* SCRAP DE FORUM */
+		/* OpenClassrooms, developpez, ...*/
+            try {
 
-			int nbResultats=0,nbTuto=0,nbResolu=0;
-			StringBuffer resolu = new StringBuffer("[Résolu]");
-			StringBuffer tuto = new StringBuffer("Tutor");
-			Element test = null ;
-			boolean ok=true;
+                    String titrePosts="oups";
+                    String rech="Junit 4";
+                    int page =0; // page =0 : c'est la page 1, page=10 c'est la page 2
+                    /*Traitement des recherches*/
+                    rech=rech.replace(" ","+");
+        			rech=rech.replace(" ", "+");
+        			String rech_col=rech.replace("+","");
+                    /*Forum*/
+                    String forum="fr.openclassrooms.com";
+                    /*Mots-clés Anglais & Francais */
+                    String motCles="probleme|erreur|bug|migration"; //piocher dans la base motcles
+                    String keywords="bug|migration|error|problem";
+        			String motCles_tuto="tutoriel";
+        			String keywords_tuto="tutorial";
+        			
+                    int nbResultats=0,nbTuto=0,nbResolu=0;
+                    /*Tutos & Problèmes résolus*/
+                    StringBuffer resolu = new StringBuffer("[Résolu]");
+                    StringBuffer tuto = new StringBuffer("Tutoriel");
+                    StringBuffer tuto_eng = new StringBuffer("Tutorial");
+                    Element test = null ;
+                    boolean ok=true;
 
-			for(page=0;page<30;page+=10){
-				page+=10;
-				Document doc = Jsoup.connect("https://www.google.fr/search?client=ubuntu&channel=fs&q="+motCles+"+%22jUnit+4%22|%22jUnit4%22+site:"+forum+"&start="+page).userAgent("Chrome").ignoreHttpErrors(true).timeout(0).get();
-				Elements listPosts=doc.select("h3.r");
-				int c=0;
-				for(Element ele:listPosts){
-//					if(c==0){
-//						test=ele;
-//						if(ele.text().contains(resolu)) nbResolu++;
-//						if(ele.text().contains(tuto)) nbTuto++;
-//						nbResultats++;
-//					}
-//					c++;
-//					if(ele==test & c>1){ ok=false;}else{
-						if(ele.text().contains(resolu)) nbResolu++;
-						if(ele.text().contains(tuto)) nbTuto++;
-						nbResultats++;
-//					}
-						
-				}
-				Thread.sleep(3000);
-			}
+                    while(ok){
+                            page+=10;
+            				Document doc = Jsoup.connect("https://www.google.fr/search?client=ubuntu&channel=fs&q="+motCles+"+%22"+rech+"%22|%22"+rech_col+"%22+site:"+forum+"&start="+page).userAgent("Chrome").ignoreHttpErrors(true).timeout(0).get();		
+                            Elements listPosts=doc.select("h3.r");
+                            int c=0;
+                            for(Element ele:listPosts){
+                                    if(c==0){
+                                            test=ele;
+                                            if(ele.text().contains(resolu)) nbResolu++;
+                                            if(ele.text().contains(tuto)) nbTuto++;
+                                            nbResultats++;
+                                    }
+                                    c++;
+                                    
+                                    if(ele==test & c>1) {ok=false;}
+                                    
+                                    else{
+                                            if(ele.text().contains(resolu)) nbResolu++;
+                                            if(ele.text().contains(tuto)) nbTuto++;
+                                            nbResultats++;
+                                    }
+                                            
+                            }
+                            Thread.sleep(3000);
+                    }
 
-			return("nbRésultats : "+nbResultats+"\n<br>nbResolu : "+nbResolu+"\n<br>nbtuto : "+nbTuto);
+                    return("nbRésultats : "+nbResultats+"\n<br>nbResolu : "+nbResolu+"\n<br>nbtuto : "+nbTuto);
 
-		}
-		catch(IOException e){
-			return("pb connection");
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			return(""+e);
-		}
-	} 
+            }
+            catch(IOException e){
+                    return("pb connection");
+            } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    return(""+e);
+            }
+    }
 
 }
