@@ -10,9 +10,7 @@ public class GitHubAPI extends Recherche {
 	private int nbLignesCodeAvant;
 	private int nbLignesCodeApres;
 
-	public GitHubAPI() {
-		super();
-	}
+	
 
 	public GitHubAPI(String fromNom, String fromVersion, String toNom,
 			String toVersion) {
