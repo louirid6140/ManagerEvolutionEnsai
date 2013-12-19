@@ -1,7 +1,9 @@
 package Manager.Evol.client;
 
-public enum MotCles {
+import java.util.Iterator;
+
+public enum MotCles{
 	
-	probleme,erreur,bug,migration,problem,error
-	
+	probleme,erreur,bug,migration;
+
 }

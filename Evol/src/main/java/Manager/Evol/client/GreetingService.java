@@ -9,5 +9,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("greet")
 public interface GreetingService extends RemoteService {
 	String googleScrap(String recherche) ;
-	String ForumScrapOpenClassrooms(String recherche) ;
+	String ForumScrapOpenClassrooms(Forums nomForum,String recherche) ;
 }
