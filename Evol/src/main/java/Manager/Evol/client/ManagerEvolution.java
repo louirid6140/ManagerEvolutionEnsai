@@ -153,7 +153,7 @@ public class ManagerEvolution implements EntryPoint {
 									fo="Problème lors de la recherche";
 								}
 								public void onSuccess(String result) {	
-									message_forum+="Pour le forums "+foru.toString()+" : \n ";
+									message_forum+="Pour le forum "+foru.toString()+" : \n ";
 									//permet d'attendre que le scrap à partir de google soit ok
 									Scheduler.get().scheduleEntry(new ScheduledCommand() {
 										public void execute() {
