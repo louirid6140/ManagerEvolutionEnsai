@@ -35,7 +35,7 @@ GreetingService {
 	}
 
 	@SuppressWarnings("null")
-	public String ForumScrapOpenClassrooms(Forums nomForum, String recherche){//element de la classe énumérées forum
+	public String forumScrap(Forums nomForum, String recherche){//element de la classe énumérées forum
 
 		/*SYNTAXE DE RECH: problème|erreur|bug|migration "jUnit 4"|"jUnit4" site:fr.openclassrooms.com" */
 		/* SCRAP DE FORUM */
@@ -49,10 +49,6 @@ GreetingService {
 			/*Mots-clés Anglais & Francais */ //piocher dans la base motcles
 
 			int nbResultats=0,nbTuto=0,nbResolu=0;
-			/*Tutos & Problèmes résolus*/
-			StringBuffer resolu = new StringBuffer("[Résolu]");
-			StringBuffer tuto = new StringBuffer("Tutoriel");
-			System.out.println("https://www.google.fr/search?q="+recherche+forum+"&start="+page);
 			Document doc1 = Jsoup.connect("https://www.google.fr/search?q="+recherche+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
 			Elements listPosts1=doc1.select("h3.r");
 			Element test = listPosts1.first();
@@ -60,7 +56,7 @@ GreetingService {
 			boolean pageOk=true;
 			int poi=0;
 			while(pageOk && poi<10){
-				Thread.sleep(3000);
+				Thread.sleep(500);
 				int c=0;
 				Document doc = Jsoup.connect("https://www.google.fr/search?q="+recherche+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
 				Elements listPosts=doc.select("h3.r");
