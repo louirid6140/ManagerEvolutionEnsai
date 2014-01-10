@@ -138,7 +138,7 @@ public class ManagerEvolution implements EntryPoint {
 
 				if(choix_github.getValue()==true){
 					
-					String code_html = "<TABLE BORDER=\"1\" CELLSPACING=\"0\">"+
+					String code_html = "<TABLE BORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"8\">"+
 					"<CAPTION><h3>Global Commit<h3></CAPTION>"+
 						"<TR><TH></TH><TH>FROM</TH><TH>TO</TH> </TR>"+
 						"<TR><TD>Nb Projet</TD><TD>"+"  </TD><TD> "+" </TD></TR>"+
