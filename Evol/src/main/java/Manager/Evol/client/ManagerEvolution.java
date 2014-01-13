@@ -133,10 +133,25 @@ public class ManagerEvolution implements EntryPoint {
 					});
 
 				}
+				
+		
 
 				if(choix_github.getValue()==true){
 					
-					panel.add(new HTML("A implémenter"), "GitHub");
+					String code_html = "<TABLE BORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"8\">"+
+					"<CAPTION><h3>Global Commit<h3></CAPTION>"+
+						"<TR><TH></TH><TH>FROM</TH><TH>TO</TH> </TR>"+
+						"<TR><TD>Nb Projet</TD><TD>"+"  </TD><TD> "+" </TD></TR>"+
+						"<TR><TD>Total</TD><TD> "+" </TD><TD> "+" </TD></TR>"+
+						"<TR><TD>Add</TD><TD> "+" </TD><TD>"+"  </TD></TR>"+
+						"<TR><TD>Del</TD><TD> "+" </TD><TD>"+"  </TD></TR>"+
+						"<TR><TD>Nb Bug</TD><TD> "+" </TD><TD>"+"  </TD></TR>"+
+					"</TABLE>";
+					
+					panel.add(new HTML(code_html), "GitHub");
+					
+					
+					
 
 				}
 
