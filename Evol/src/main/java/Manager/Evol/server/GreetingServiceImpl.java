@@ -9,6 +9,8 @@ import org.jsoup.select.Elements;
 
 import Manager.Evol.client.Forums;
 import Manager.Evol.client.GreetingService;
+import Manager.Evol.client.MotCles;
+import Manager.Evol.client.Recherche;
 import Manager.Evol.client.Tags;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -20,6 +22,13 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class GreetingServiceImpl extends RemoteServiceServlet implements
 GreetingService {
 
+	/**
+	 * Fonction cote serveur.Retourne un nombre de resultats google a partir d'un requete.
+	 * 
+	 * @param recherche: requete google
+	 * @return  nombre de resultats google a partir d'un requete (recherche) .
+
+	 */
 	public  String googleScrap(String recherche) {
 		try {
 
@@ -34,6 +43,15 @@ GreetingService {
 		}
 	}
 
+	/**
+	 * Fonction cote serveur.Retourne une chaine de caractere contenant les indicateurs trouves sur un forum
+	 * (nb tuto, nb resultats, nb resolus).
+	 * 
+	 * @param recherche: requete google
+	 * @param nomForum: un forum particulier
+	 * @return  chaine de caractere contenant les indicateurs trouves sur le forum .
+
+	 */
 	@SuppressWarnings("null")
 	public String forumScrap(Forums nomForum, String recherche){//element de la classe énumérées forum
 
@@ -52,7 +70,7 @@ GreetingService {
 			Document doc1 = Jsoup.connect("https://www.google.fr/search?q="+recherche+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
 			Elements listPosts1=doc1.select("h3.r");
 			Element test = listPosts1.first();
-			
+
 			boolean pageOk=true;
 			int poi=0;
 			while(pageOk && poi<10){
@@ -68,9 +86,9 @@ GreetingService {
 							test=ele;
 						}
 						if(pageOk){
-						if(ele.text().contains(Tags.resolu.toString())) nbResolu++;
-						if(ele.text().contains(Tags.tutoriel.toString())) nbTuto++;
-						nbResultats++;
+							if(ele.text().contains(Tags.resolu.toString())) nbResolu++;
+							if(ele.text().contains(Tags.tutoriel.toString())) nbTuto++;
+							nbResultats++;
 						}
 					}
 					c++;
