@@ -131,7 +131,6 @@ public class ManagerEvolution implements EntryPoint {
 						}
 
 					});
-
 				}
 				
 		
@@ -149,8 +148,6 @@ public class ManagerEvolution implements EntryPoint {
 					"</TABLE>";
 					
 					panel.add(new HTML(code_html), "GitHub");
-					
-					
 					
 
 				}
