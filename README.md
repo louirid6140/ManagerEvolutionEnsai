@@ -18,8 +18,11 @@ L'application est désormais importée sous eclipse, vous allez pouvoir la lance
 
 ----------
 
-Sur un serveur
-----------
+Sur un serveur Glassfish
+---------
+Vous pouvez également lancer l'application sans passer par eclipse, mais en la déployant sur un serveur Glassfish. Pour cela il vous faut télécharger Glassfish [ici][2]. Décompresser le fichier **glassfish-4.0.zip** dans le dossier de votre choix. Vous devez ensuite lancez le serveur via l'invite de commande (rechercher "cmd" dans windows). Accédez à votre dossier **glassfish4** (pour voir les fichiers et les documents du répertoire courant, tapez la commande **dir** et pour accédez à un dossier tapez **cd +** *nom du dossier*). Une fois dans ce répertoire, accédez au repertoire **bin** puis tapez la commande suivante **asadmin start-domain**. Votre serveur est désormais lancé, vous pouvez accéder au portail d'administration via un browser à l'adresse **localhost:4848**. Il faut désormais déployer l'application sur le serveur. Cliquez sur **Application** puis sur **Deploy**. Cliquez ensuite sur **Choisissez un fichier** et sélectionnez le fichier *EvolutionManager.war* puis cliquez sur **OK**. L'application est désormais déployée, cliquez sur **Launch** puis sur le premier des deux liens qui vous sont proposés (le deuxième fonctionne également). Vous avez désormais accès à l'application.
 
 
- [1]:http://www.eclipse.org/downloads/packages/eclipse-standard-431/keplersr1
+
+  [1]:http://www.eclipse.org/downloads/packages/eclipse-standard-431/keplersr1
+  [2]: https://glassfish.java.net/download.html
