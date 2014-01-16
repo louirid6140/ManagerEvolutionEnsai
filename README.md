@@ -2,7 +2,7 @@ Evolution Manager
 =================
 
  
-Vous pouvez déployer l'application Evolution Manager de deux façons : via Eclipse ou via un exécutable. Vous devez posséder une connection internet pour faire fonctionner l'application.
+Vous pouvez déployer l'application Evolution Manager de deux façons : via Eclipse ou via un serveur Glassfish. Vous devez posséder une connection internet pour faire fonctionner l'application.
  
 ----
 Via eclipse
