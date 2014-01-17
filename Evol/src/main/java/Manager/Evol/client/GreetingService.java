@@ -10,4 +10,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface GreetingService extends RemoteService {
 	String googleScrap(String recherche) ;
 	String forumScrap(Forums nomForum,String recherche) ;
+	String gitHubScrap(String fn,String fv,String tn,String tv);
 }

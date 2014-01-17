@@ -31,6 +31,7 @@ public class ManagerEvolution implements EntryPoint {
 
 	private String nb;
 	private String fo;
+	private String gi;
 	private String nom_recherche;
 	private String message_forum="";
 	private int nb_forum=0;
@@ -137,17 +138,28 @@ public class ManagerEvolution implements EntryPoint {
 
 				if(choix_github.getValue()==true){
 					
-					String code_html = "<TABLE BORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"8\">"+
-					"<CAPTION><h3>Global Commit<h3></CAPTION>"+
-						"<TR><TH></TH><TH>FROM</TH><TH>TO</TH> </TR>"+
-						"<TR><TD>Nb Projet</TD><TD>"+"  </TD><TD> "+" </TD></TR>"+
-						"<TR><TD>Total</TD><TD> "+" </TD><TD> "+" </TD></TR>"+
-						"<TR><TD>Add</TD><TD> "+" </TD><TD>"+"  </TD></TR>"+
-						"<TR><TD>Del</TD><TD> "+" </TD><TD>"+"  </TD></TR>"+
-						"<TR><TD>Nb Bug</TD><TD> "+" </TD><TD>"+"  </TD></TR>"+
-					"</TABLE>";
+					DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "wait");
+					GitHubAPI git=new GitHubAPI(name_old.getValue(),version_old.getValue(),name_new.getValue(),version_new.getValue());
+					//Scrapping avec GitHub
+					greetingService.gitHubScrap(git.getFromNom(),git.getFromVersion(),git.getToNom(),git.getToVersion(),
+							new AsyncCallback<String>() {
+						public void onFailure(Throwable caught) {
+							// Si problème lors du scrapping réponse 
+							gi="Problème lors de la recherche";
+						}
+						public void onSuccess(String result) {
+							//permet d'attendre que le scrap à partir de github soit ok
+							Scheduler.get().scheduleEntry(new ScheduledCommand() {
+								public void execute() {
+									panel.add(new HTML(gi), "GitHub");
+									DOM.setStyleAttribute(RootPanel.getBodyElement(), "cursor", "default");
+								}
+							});
+							gi=result;
+						}
+
+					});
 					
-					panel.add(new HTML(code_html), "GitHub");
 					
 
 				}
