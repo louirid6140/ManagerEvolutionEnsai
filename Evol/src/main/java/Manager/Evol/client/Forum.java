@@ -125,9 +125,23 @@ public class Forum extends Recherche {
 		rech=this.getFromNom()+"+"+this.getFromVersion();
 		rech=rech.replace(" ","+");
 		rech_col=rech.replace("+","");
-		return motCles+"+"+GUILLEMET_GOOGLE+rech+GUILLEMET_GOOGLE+"|"+GUILLEMET_GOOGLE+rech_col+GUILLEMET_GOOGLE+"+site:";
+		String partie1=motCles+"+"+GUILLEMET_GOOGLE+rech+GUILLEMET_GOOGLE+"|"+GUILLEMET_GOOGLE+rech_col+GUILLEMET_GOOGLE+"+site:";
+		
+		String motCles2="";
+		String rech2="";
+		String rech_col2="";
+		for (MotCles mot:MotCles.values()) {
+			motCles2+="|"+mot.toString();
+		}
+		motCles2=motCles2.substring(1);
+		rech2=this.getToNom()+"+"+this.getToVersion();
+		rech2=rech2.replace(" ","+");
+		rech_col2=rech2.replace("+","");
+		String partie2=motCles2+"+"+GUILLEMET_GOOGLE+rech2+GUILLEMET_GOOGLE+"|"+GUILLEMET_GOOGLE+rech_col2+GUILLEMET_GOOGLE+"+site:";
+		return partie1+"PARTIE2:"+partie2;
 
 	}
+
 
 
 }

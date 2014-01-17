@@ -1,2 +1,3 @@
 # Module ManagerEvolution
 # RPC service class, partial path of RPC policy file
+Manager.Evol.client.GreetingService, 1ABA437108A4974EDA331E5CFF944C86.gwt.rpc

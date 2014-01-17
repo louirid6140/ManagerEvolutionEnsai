@@ -14,10 +14,7 @@ import org.jsoup.select.Elements;
 
 import Manager.Evol.client.Forums;
 import Manager.Evol.client.GitHubAPI;
-import Manager.Evol.client.GoogleHit;
 import Manager.Evol.client.GreetingService;
-import Manager.Evol.client.MotCles;
-import Manager.Evol.client.Recherche;
 import Manager.Evol.client.Tags;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -66,26 +63,52 @@ GreetingService {
 		/* SCRAP DE FORUM */
 		/* OpenClassrooms, developpez, ...*/
 		try {
-
-			int page =0; // page =0 : c'est la page 1, page=10 c'est la page 2
+			int part2=recherche.indexOf("PARTIE2:");
+			String partie1= recherche.substring(0,part2);
+			String partie2= recherche.substring(part2+8);
+			int page =0;
+			int page2 =0;// page =0 : c'est la page 1, page=10 c'est la page 2
 			/*Traitement des recherches*/
 			/*Forum*/
 			String forum=nomForum.toString();
 			/*Mots-clés Anglais & Francais */ //piocher dans la base motcles
 
-			int nbResultats=0,nbTuto=0,nbResolu=0;
-			Document doc1 = Jsoup.connect("https://www.google.fr/search?q="+recherche+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
-			Elements listPosts1=doc1.select("h3.r");
+			String nbResultats1=null;
+			int nbTuto1=0,nbResolu1=0;
+			String nbResultats2=null;
+			int nbTuto2=0,nbResolu2=0;
+			
+			Document doc1 = Jsoup.connect("https://www.google.fr/search?q="+partie1+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
+			Thread.sleep(500);
+			Document doc11 = Jsoup.connect("https://www.google.fr/search?q="+partie1.substring(30)+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
+			Elements listPosts1=doc11.select("h3.r");
 			Element test = listPosts1.first();
-
+			
+			
+			Element nbResultatE=doc1.select("div#resultStats").first();
+			nbResultats1=nbResultatE.text().replace("\u00a0","").replaceAll("[^\\d.]", "");
+			
+			Thread.sleep(500);
+			Document doc2 = Jsoup.connect("https://www.google.fr/search?q="+partie2+forum+"&start="+page2).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
+			Thread.sleep(500);
+			Document doc22 = Jsoup.connect("https://www.google.fr/search?q="+partie2.substring(30)+forum+"&start="+page2).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
+			Elements listPosts2=doc22.select("h3.r");
+			Element test2 = listPosts2.first();
+			
+			
+			Element nbResultatE2=doc2.select("div#resultStats").first();
+			System.out.println("azerty");
+			nbResultats2=nbResultatE2.text().replace("\u00a0","").replaceAll("[^\\d.]", "");
+			
+			
 			boolean pageOk=true;
 			int poi=0;
 			while(pageOk && poi<10){
 				Thread.sleep(500);
 				int c=0;
-				Document doc = Jsoup.connect("https://www.google.fr/search?q="+recherche+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
-				Elements listPosts=doc.select("h3.r");
-				for(Element ele:listPosts){
+				Document doc = Jsoup.connect("https://www.google.fr/search?q="+partie1.substring(30)+forum+"&start="+page).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
+				Elements listPosts11=doc.select("h3.r");
+				for(Element ele:listPosts11){
 					if(poi>0 & (test.text()).equals(ele.text())){
 						pageOk=false;
 					}else{
@@ -93,9 +116,8 @@ GreetingService {
 							test=ele;
 						}
 						if(pageOk){
-							if(ele.text().contains(Tags.resolu.toString())) nbResolu++;
-							if(ele.text().contains(Tags.tutoriel.toString())) nbTuto++;
-							nbResultats++;
+							if(ele.text().contains(Tags.resolu.toString())) {nbResolu1++;}
+							if(ele.text().contains(Tags.tutoriel.toString())) nbTuto1++;
 						}
 					}
 					c++;
@@ -103,8 +125,42 @@ GreetingService {
 				poi++;
 				page+=10;
 			}
+			
+			boolean pageOkk=true;
+			int poi2=0;
+			while(pageOkk && poi2<10){
+				Thread.sleep(500);
+				int c=0;
+				Document doc = Jsoup.connect("https://www.google.fr/search?q="+partie2.substring(30)+forum+"&start="+page2).userAgent("Mozilla").ignoreHttpErrors(true).timeout(0).get();		
+				Elements listPosts22=doc.select("h3.r");
+				for(Element ele:listPosts22){
+					if(poi2>0 & (test2.text()).equals(ele.text())){
+						pageOkk=false;
+					}else{
+						if(c==0){
+							test2=ele;
+						}
+						if(pageOkk){
+							if(ele.text().contains(Tags.resolu.toString())){ nbResolu2++;}
+							if(ele.text().contains(Tags.tutoriel.toString())){ nbTuto2++;}
+						}
+					}
+					c++;
+				}
+				poi2++;
+				page2+=10;
+			}
 
-			return("nbRésultats : "+nbResultats+"\n<br>nbResolu : "+nbResolu+"\n<br>nbtuto : "+nbTuto);
+			String code_html="<TABLE BORDER=\"1\" CELLSPACING=\"0\" CELLPADDING=\"8\">"+
+					"<CAPTION><h3>resultats des forums<h3></CAPTION>"+
+					"<TR><TH></TH><TH>FROM</TH><TH>TO</TH> </TR>"+
+					"<TR><TD>Nb erreurs relatives à ce sujet pour le forum</TD><TD> "+nbResultats1+" </TD><TD>"+nbResultats2+"  </TD></TR>"+
+					"<TR><TD>Nb résolus</TD><TD> "+nbResolu1+" </TD><TD>"+nbResolu2+"  </TD></TR>"+
+					"<TR><TD>Nb Tuto</TD><TD> "+nbTuto1+" </TD><TD>"+nbTuto2+"  </TD></TR>"+
+					"</TABLE>";
+			return code_html;
+//			return("nb erreur: "+nbResultats1+"\n<br>nbResolu : "+nbResolu1+"\n<br>nbtuto : "+nbTuto1+
+//					"\n nb erreur: "+nbResultats2+"\n<br>nbResolu : "+nbResolu2+"\n<br>nbtuto : "+nbTuto2);
 
 		}
 		catch(IOException e){
@@ -114,6 +170,7 @@ GreetingService {
 			return(""+e);
 		}
 	}
+
 
 	/**
 	 * Fonction cote serveur.Retourne les resultats de la recherche sur github.
@@ -177,8 +234,8 @@ GreetingService {
 					}
 				}
 				catch(IOException e){
-					//return("pb connection");
-					System.out.println("IOException : "+e);
+					return("Aïe aïe aïe erreur de gros sale !");
+					//System.out.println("IOException : "+e);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -187,6 +244,10 @@ GreetingService {
 
 				return affichage(fromGM_commit,fromGM_bug,toGM_commit,toGM_bug);
 	}
+	
+
+
+
 	
 	/**
 	 * Retourne la liste des répertoire github répondant à la recherche github.
