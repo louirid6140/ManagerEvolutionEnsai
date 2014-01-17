@@ -133,8 +133,8 @@ GreetingService {
 				int fromGM_bug=0;
 				ArrayList<int[]> toGM_commit=new ArrayList<int[]>();
 				int toGM_bug=0;
-				ArrayList<String> reposF=getAllRepo(fn,1);
-				ArrayList<String> reposT=getAllRepo(tn,1);
+				ArrayList<String> reposF=getAllRepo(fn+" "+fv,1);
+				ArrayList<String> reposT=getAllRepo(tn+" "+tv,1);
 				try{
 					for(String repo:reposF){
 						Document docF = Jsoup.connect("https://api.github.com/repos/"+repo).userAgent("Mozilla").ignoreContentType(true).get();//.userAgent("Chrome").ignoreHttpErrors(true).timeout(0).get();		
